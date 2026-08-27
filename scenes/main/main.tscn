@@ -1,0 +1,31 @@
+[gd_scene load_steps=8 format=3 uid="uid://x8b9p1q2c3v4m"]
+
+[ext_resource type="Script" path="res://scenes/main/main.gd" id="1_main"]
+[ext_resource type="PackedScene" uid="uid://m1n2b3c4v5x6z" path="res://scenes/world/basic_map.tscn" id="2_world"]
+[ext_resource type="PackedScene" uid="uid://b7v8d2x9k1m3p" path="res://scenes/player/player.tscn" id="3_player"]
+[ext_resource type="Script" path="res://player/camera/camera_controller.gd" id="4_camera"]
+[ext_resource type="PackedScene" uid="uid://c3m7x8n1p2q4v" path="res://scenes/ui/hud.tscn" id="5_hud"]
+[ext_resource type="PackedScene" uid="uid://dp5r8k1t9v4w2" path="res://scenes/ui/pause_menu.tscn" id="6_pause"]
+[ext_resource type="PackedScene" uid="uid://e4x7q2m8b9n1w" path="res://scenes/ui/debug_overlay.tscn" id="7_debug"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_main")
+
+[node name="World" parent="." instance=ExtResource("2_world")]
+
+[node name="Player" parent="." instance=ExtResource("3_player")]
+position = Vector2(0, 0)
+
+[node name="CameraController" type="Camera2D" parent="." node_paths=PackedStringArray("target_node")]
+position_smoothing_enabled = true
+position_smoothing_speed = 7.0
+script = ExtResource("4_camera")
+target_node = NodePath("../Player")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HUD" parent="CanvasLayer" instance=ExtResource("5_hud")]
+
+[node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("6_pause")]
+
+[node name="DebugOverlay" parent="." instance=ExtResource("7_debug")]
