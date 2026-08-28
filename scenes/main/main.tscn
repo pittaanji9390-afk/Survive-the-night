@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://x8b9p1q2c3v4m"]
+[gd_scene load_steps=37 format=3 uid="uid://x8b9p1q2c3v4m"]
 
 [ext_resource type="Script" path="res://scenes/main/main.gd" id="1_main"]
 [ext_resource type="PackedScene" uid="uid://m1n2b3c4v5x6z" path="res://scenes/world/basic_map.tscn" id="2_world"]
@@ -37,6 +37,7 @@
 [ext_resource type="Script" path="res://weather/seasons/season_manager.gd" id="35_season_mgr"]
 [ext_resource type="Script" path="res://colony/jobs/job_manager.gd" id="36_job_mgr"]
 [ext_resource type="Script" path="res://factions/manager/faction_manager.gd" id="37_fact_mgr"]
+[ext_resource type="Script" path="res://minigames/hub/arcade_manager.gd" id="38_arcade_mgr"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_main")
@@ -49,6 +50,9 @@ script = ExtResource("32_snd_mgr")
 
 [node name="SaveManager" type="Node" parent="."]
 script = ExtResource("30_save_mgr")
+
+[node name="ArcadeManager" type="Node" parent="."]
+script = ExtResource("38_arcade_mgr")
 
 [node name="PowerGridManager" type="Node" parent="."]
 script = ExtResource("34_pwr_mgr")
