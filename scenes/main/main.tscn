@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://x8b9p1q2c3v4m"]
+[gd_scene load_steps=32 format=3 uid="uid://x8b9p1q2c3v4m"]
 
 [ext_resource type="Script" path="res://scenes/main/main.gd" id="1_main"]
 [ext_resource type="PackedScene" uid="uid://m1n2b3c4v5x6z" path="res://scenes/world/basic_map.tscn" id="2_world"]
@@ -32,6 +32,7 @@
 [ext_resource type="Script" path="res://persistence/save_manager.gd" id="30_save_mgr"]
 [ext_resource type="Script" path="res://quests/quest_manager.gd" id="31_quest_mgr"]
 [ext_resource type="Script" path="res://audio/sound_manager.gd" id="32_snd_mgr"]
+[ext_resource type="Script" path="res://world/dungeon/dungeon_manager.gd" id="33_dung_mgr"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_main")
@@ -53,6 +54,9 @@ script = ExtResource("29_skill_mgr")
 
 [node name="QuestManager" type="Node" parent="."]
 script = ExtResource("31_quest_mgr")
+
+[node name="DungeonManager" type="Node2D" parent="."]
+script = ExtResource("33_dung_mgr")
 
 [node name="ChunkManager" type="Node2D" parent="."]
 script = ExtResource("27_chunk_mgr")

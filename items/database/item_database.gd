@@ -53,6 +53,13 @@ static func _populate_default_items() -> void:
 	_create_resource(&"clay", "Wet Clay", "Malleable earth suitable for pottery, bricks, and furnace masonry.", 99, 0.6, 2)
 	_create_resource(&"stick", "Wooden Stick", "A slender piece of wood suitable for crafting tools, arrows, and kindling.", 99, 0.2, 1)
 
+	# Subterranean Gems & Ores
+	_create_resource(&"ruby", "Crimson Ruby", "Flawless precious gemstone found deep in subterranean chasms.", 99, 0.2, 50)
+	_create_resource(&"sapphire", "Deep Sapphire", "Gleaming blue crystal resonating with arcane subterranean energy.", 99, 0.2, 50)
+	_create_resource(&"mythril_ore", "Mythril Ore", "Luminescent sky-blue metal ore of immense tensile strength.", 99, 1.4, 25)
+	_create_resource(&"mythril_ingot", "Mythril Ingot", "Super-refined lightweight metal bar forged from subterranean mythril.", 99, 0.8, 80)
+	_create_resource(&"spider_fang", "Arachnid Fang", "Venom-infused chitinous fang harvested from cave spiders.", 99, 0.1, 12)
+
 	# 2. Foraged Food & Crops
 	_create_food(&"berries", "Sweet Berries", "Handful of ripe wild forest berries. Restores hunger and a pinch of stamina.", 50, 0.1, 1, 2.0, 5.0, 8.0)
 	_create_food(&"apple", "Crisp Apple", "A juicy wild orchard apple, rich in natural sugars and moisture.", 30, 0.2, 3, 5.0, 10.0, 12.0)
@@ -72,11 +79,13 @@ static func _populate_default_items() -> void:
 	_create_tool(&"iron_axe", "Iron Axe", "A finely forged iron axe capable of cutting the densest hard timber swiftly.", ItemDefinition.ToolType.AXE, 3, 22.0, 1.3, 250, 45)
 	_create_tool(&"stone_pickaxe", "Stone Pickaxe", "A sturdy chisel pick for breaking rocks and harvesting raw stone.", ItemDefinition.ToolType.PICKAXE, 2, 10.0, 1.0, 100, 15)
 	_create_tool(&"iron_pickaxe", "Iron Pickaxe", "Heavy iron pickaxe designed to extract tough metal ores cleanly.", ItemDefinition.ToolType.PICKAXE, 3, 20.0, 1.2, 250, 45)
+	_create_tool(&"mythril_pickaxe", "Mythril Pickaxe", "Masterwork subterranean mining pick that shatters the hardest crystals.", ItemDefinition.ToolType.PICKAXE, 4, 32.0, 1.5, 500, 150)
 
 	# 4. Weapons
 	_create_weapon(&"wooden_sword", "Wooden Club", "A carved blunt wooden club for fending off nocturnal beasts.", 14.0, 1.2, 45.0, 80, 10)
 	_create_weapon(&"stone_sword", "Stone Blade", "A knapped stone dagger with serrated edge. Moderate damage.", 20.0, 1.4, 48.0, 120, 20)
 	_create_weapon(&"iron_sword", "Iron Broadsword", "A sharp balanced steel blade delivering deadly sweeping slashes.", 32.0, 1.5, 52.0, 250, 60)
+	_create_weapon(&"spider_dagger", "Arachnid Venom Dagger", "A swift curved dagger coated in paralyzing neurotoxin.", 28.0, 1.8, 42.0, 200, 90)
 	_create_weapon(&"hunting_bow", "Hunting Bow", "A flexible wooden curved bow capable of launching arrows at distance.", 25.0, 0.9, 250.0, 150, 40)
 	_create_resource(&"arrow", "Flint Arrow", "Feathered wooden projectile tipped with razor flint.", 99, 0.05, 1)
 
@@ -85,6 +94,7 @@ static func _populate_default_items() -> void:
 	_create_armor(&"leather_tunic", "Leather Tunic", "Reinforced hide armor protecting the torso from claws and fangs.", ItemDefinition.EquipmentSlotType.CHEST, 5.0, 0.0, 15.0, 150, 35)
 	_create_armor(&"leather_boots", "Leather Boots", "Sturdy exploration boots providing enhanced sprinting endurance.", ItemDefinition.EquipmentSlotType.FEET, 2.0, 10.0, 5.0, 120, 25)
 	_create_armor(&"iron_chestplate", "Iron Chestplate", "Heavy polished metal plate armor granting substantial defense.", ItemDefinition.EquipmentSlotType.CHEST, 14.0, -5.0, 30.0, 300, 100)
+	_create_armor(&"silk_robe", "Shadow Silk Robe", "Woven from Broodmother silk, granting incredible agility and warding.", ItemDefinition.EquipmentSlotType.CHEST, 10.0, 15.0, 20.0, 250, 120)
 
 	# 6. Crafted Materials
 	_create_resource(&"wooden_plank", "Wooden Plank", "Processed lumber planed flat for building floors, walls, and chests.", 99, 0.3, 4)
