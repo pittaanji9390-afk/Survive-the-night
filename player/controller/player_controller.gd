@@ -11,8 +11,11 @@ signal interaction_target_changed(target: Node)
 @onready var equipment: EquipmentInventory = $EquipmentInventory
 @onready var crafting_queue: CraftingQueue = $CraftingQueue
 @onready var interaction_area: Area2D = $InteractionArea
+@onready var hurtbox: HurtboxComponent = get_node_or_null("HurtboxComponent") as HurtboxComponent
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var interaction_label: Label = $InteractionPrompt
+
+var arrow_scene: PackedScene = preload("res://scenes/items/arrow_projectile.tscn")
 
 var current_interactable: Node = null
 var _nearby_interactables: Array[Node] = []
@@ -29,6 +32,9 @@ func _ready() -> void:
 	interaction_area.body_exited.connect(_on_interaction_body_exited)
 	
 	stats.player_died.connect(_on_player_died)
+	
+	if hurtbox:
+		hurtbox.hit_received.connect(_on_player_hit_received)
 	
 	if interaction_label:
 		interaction_label.visible = false
@@ -56,13 +62,15 @@ func _physics_process(delta: float) -> void:
 
 func _grant_starter_items() -> void:
 	if inventory:
-		# Starter gear and resources to craft immediately
 		inventory.add_item(&"stone_axe", 1)
 		inventory.add_item(&"stone_pickaxe", 1)
+		inventory.add_item(&"stone_sword", 1)
+		inventory.add_item(&"hunting_bow", 1)
+		inventory.add_item(&"arrow", 20)
 		inventory.add_item(&"berries", 15)
-		inventory.add_item(&"wood", 12)
-		inventory.add_item(&"stone", 10)
-		inventory.add_item(&"fiber", 8)
+		inventory.add_item(&"wood", 16)
+		inventory.add_item(&"stone", 12)
+		inventory.add_item(&"fiber", 10)
 
 func _handle_input_and_movement(delta: float) -> void:
 	if not state_machine.can_move():
@@ -92,16 +100,19 @@ func _handle_input_and_movement(delta: float) -> void:
 	move_and_slide()
 
 func _handle_actions() -> void:
-	# Primary Left-Click: Attack / Gather
 	if InputManager.is_attacking() and _attack_cooldown <= 0.0:
 		_perform_gather_or_attack()
 	
-	# Secondary Right-Click: Use Consumable / Eat / Drink
 	if InputManager.is_using_item() and _use_item_cooldown <= 0.0:
 		_perform_use_item()
 
 func _perform_gather_or_attack() -> void:
 	var active_item: ItemDefinition = hotbar.get_active_item() if hotbar else null
+	
+	# Check if holding Bow -> Fire Ranged Projectile
+	if active_item and active_item.id == &"hunting_bow":
+		_perform_bow_attack(active_item)
+		return
 	
 	var t_type: ItemDefinition.ToolType = active_item.tool_type if active_item else ItemDefinition.ToolType.NONE
 	var t_tier: int = active_item.tool_tier if active_item else 0
@@ -119,12 +130,71 @@ func _perform_gather_or_attack() -> void:
 	
 	_animate_swing()
 	
+	# Check for resource node hits
 	var target_node: ResourceNode = _find_target_resource_node()
 	if target_node:
 		var dealt: float = target_node.hit(damage, t_type, t_tier, self)
 		GameLogger.info("Player", "Hit %s for %.1f damage." % [target_node.node_name, dealt])
+		return
+	
+	# Check for enemy hits in melee arc
+	var target_enemy: EnemyBase = _find_target_enemy()
+	if target_enemy:
+		var is_crit: bool = (randf() < 0.2)
+		var dealt_dmg: float = target_enemy.take_damage(damage * (1.5 if is_crit else 1.0), self, is_crit)
+		EventBus.screen_shake_requested.emit(0.12)
+		GameLogger.info("Player", "Struck %s for %.1f damage!" % [target_enemy.enemy_name, dealt_dmg])
 	else:
-		EventBus.screen_shake_requested.emit(0.05)
+		EventBus.screen_shake_requested.emit(0.04)
+
+func _perform_bow_attack(bow_def: ItemDefinition) -> void:
+	if not inventory or inventory.get_item_count(&"arrow") <= 0:
+		EventBus.notification_posted.emit("No Ammo", "You need Arrows to fire your bow!", "warn")
+		return
+	
+	var stam_cost: float = bow_def.stamina_cost_per_use
+	if stats.stamina.get_current_value() < stam_cost:
+		return
+	
+	stats.stamina.modify_current(-stam_cost)
+	inventory.remove_item(&"arrow", 1)
+	_attack_cooldown = 1.0 / maxf(0.5, bow_def.attack_speed)
+	
+	_animate_swing()
+	
+	var mouse_pos: Vector2 = get_global_mouse_position()
+	var fire_dir: Vector2 = (mouse_pos - global_position).normalized()
+	
+	var arrow: Projectile = arrow_scene.instantiate() as Projectile
+	arrow.global_position = global_position
+	arrow.direction = fire_dir
+	arrow.damage = bow_def.base_damage
+	arrow.hit_team = 0 # Player team
+	arrow.source_entity = self
+	
+	var parent_world: Node = get_parent()
+	if parent_world:
+		parent_world.add_child(arrow)
+	
+	EventBus.screen_shake_requested.emit(0.06)
+
+func _find_target_enemy() -> EnemyBase:
+	var facing: Vector2 = movement_component.facing_direction
+	var attack_reach: float = 52.0
+	var hit_center: Vector2 = global_position + facing * (attack_reach * 0.5)
+	
+	var closest_enemy: EnemyBase = null
+	var min_dist_sq: float = (attack_reach * attack_reach)
+	
+	var tree_nodes: Array[Node] = get_tree().get_nodes_in_group("enemy")
+	for node in tree_nodes:
+		if node is EnemyBase and node.current_state != EnemyBase.AIState.DEAD:
+			var d_sq: float = hit_center.distance_squared_to(node.global_position)
+			if d_sq < min_dist_sq:
+				min_dist_sq = d_sq
+				closest_enemy = node
+	
+	return closest_enemy
 
 func _perform_use_item() -> void:
 	var active_slot: InventorySlot = hotbar.get_active_slot() if hotbar else null
@@ -151,7 +221,6 @@ func _perform_use_item() -> void:
 	EventBus.notification_posted.emit("Consumable Used", msg, "heal")
 	GameLogger.info("Player", msg)
 	
-	# Small green flash on player sprite
 	if sprite:
 		var tween: Tween = create_tween()
 		sprite.modulate = Color(0.4, 1.5, 0.4, 1.0)
@@ -225,6 +294,15 @@ func _update_best_interactable() -> void:
 				interaction_label.visible = true
 			else:
 				interaction_label.visible = false
+
+func _on_player_hit_received(amount: float, _is_crit: bool, attacker: Node2D) -> void:
+	stats.apply_damage(amount, attacker, true)
+	EventBus.screen_shake_requested.emit(0.2)
+	DamagePipeline.spawn_damage_number(get_parent(), global_position, amount, false)
+	if sprite:
+		var t: Tween = create_tween()
+		sprite.modulate = Color(2.0, 0.4, 0.4, 1.0)
+		t.tween_property(sprite, "modulate", Color.WHITE, 0.2)
 
 func _on_interaction_area_entered(area: Area2D) -> void:
 	if area.is_in_group("interactable") and not _nearby_interactables.has(area):

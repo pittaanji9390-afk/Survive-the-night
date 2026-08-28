@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://b7v8d2x9k1m3p"]
+[gd_scene load_steps=14 format=3 uid="uid://b7v8d2x9k1m3p"]
 
 [ext_resource type="Script" path="res://player/controller/player_controller.gd" id="1_controller"]
 [ext_resource type="Script" path="res://player/movement/movement_component.gd" id="2_movement"]
@@ -9,12 +9,16 @@
 [ext_resource type="Script" path="res://inventory/hotbar_manager.gd" id="7_hotbar"]
 [ext_resource type="Script" path="res://inventory/equipment_inventory.gd" id="8_equip"]
 [ext_resource type="Script" path="res://crafting/queue/crafting_queue.gd" id="9_craft_queue"]
+[ext_resource type="Script" path="res://core/combat/hurtbox_component.gd" id="10_hurtbox"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_player"]
 radius = 10.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_interact"]
 radius = 48.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hurtbox"]
+radius = 12.0
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 collision_layer = 1
@@ -49,6 +53,13 @@ script = ExtResource("8_equip")
 
 [node name="CraftingQueue" type="Node" parent="."]
 script = ExtResource("9_craft_queue")
+
+[node name="HurtboxComponent" type="Area2D" parent="."]
+script = ExtResource("10_hurtbox")
+hurt_team = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+shape = SubResource("CircleShape2D_hurtbox")
 
 [node name="InteractionArea" type="Area2D" parent="."]
 collision_layer = 0

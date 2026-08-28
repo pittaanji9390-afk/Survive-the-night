@@ -1,0 +1,31 @@
+[gd_scene load_steps=7 format=3 uid="uid://e4n5m6p7q8r9s"]
+
+[ext_resource type="Script" path="res://enemies/types/skeleton_archer.gd" id="1_archer"]
+[ext_resource type="Texture2D" path="res://assets/sprites/skeleton.png" id="2_skel_tex"]
+[ext_resource type="Script" path="res://core/combat/hurtbox_component.gd" id="3_hurtbox"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_skel_body"]
+radius = 10.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hurtbox"]
+radius = 14.0
+
+[node name="SkeletonArcher" type="CharacterBody2D" groups=["enemy"]]
+collision_layer = 8
+collision_mask = 7
+motion_mode = 1
+script = ExtResource("1_archer")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_skel_tex")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 4)
+shape = SubResource("CircleShape2D_skel_body")
+
+[node name="HurtboxComponent" type="Area2D" parent="."]
+script = ExtResource("3_hurtbox")
+hurt_team = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+shape = SubResource("CircleShape2D_hurtbox")

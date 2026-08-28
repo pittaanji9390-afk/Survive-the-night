@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://x8b9p1q2c3v4m"]
+[gd_scene load_steps=17 format=3 uid="uid://x8b9p1q2c3v4m"]
 
 [ext_resource type="Script" path="res://scenes/main/main.gd" id="1_main"]
 [ext_resource type="PackedScene" uid="uid://m1n2b3c4v5x6z" path="res://scenes/world/basic_map.tscn" id="2_world"]
@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://e4x7q2m8b9n1w" path="res://scenes/ui/debug_overlay.tscn" id="13_debug"]
 [ext_resource type="Script" path="res://progression/technology/tech_tree_manager.gd" id="14_tech_mgr"]
 [ext_resource type="Script" path="res://building/placement/building_manager.gd" id="15_build_mgr"]
+[ext_resource type="Script" path="res://enemies/spawning/night_spawner.gd" id="16_night_spawner"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_main")
@@ -24,6 +25,9 @@ script = ExtResource("14_tech_mgr")
 
 [node name="BuildingManager" type="Node2D" parent="."]
 script = ExtResource("15_build_mgr")
+
+[node name="NightSpawner" type="Node2D" parent="."]
+script = ExtResource("16_night_spawner")
 
 [node name="World" parent="." instance=ExtResource("2_world")]
 
