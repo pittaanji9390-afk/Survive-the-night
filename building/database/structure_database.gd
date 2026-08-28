@@ -113,7 +113,7 @@ static func _populate_default_structures() -> void:
 		[{ "id": &"wood", "count": 4 }, { "id": &"rope", "count": 2 }], &"")
 
 	# ==========================================
-	# 6. LIGHTING & UTILITY & FARMING & FACTORY
+	# 6. LIGHTING & UTILITY & FARMING & FACTORY & FLUIDS
 	# ==========================================
 	_add_struct(&"standing_torch", "Standing Torch", "Mounted pitch torch providing persistent ambient perimeter illumination.",
 		StructureDefinition.StructureType.LIGHT, StructureDefinition.MaterialType.WOOD,
@@ -144,6 +144,11 @@ static func _populate_default_structures() -> void:
 		StructureDefinition.StructureType.WALL, StructureDefinition.MaterialType.IRON,
 		Vector2i(1, 1), 200.0, 3.0, false, false,
 		[{ "id": &"iron_ingot", "count": 3 }, { "id": &"gold_ingot", "count": 1 }], &"")
+
+	_add_struct(&"fluid_tank", "Fluid Storage Tank", "Reinforced pressure vessel holding up to 500 liters of liquids.",
+		StructureDefinition.StructureType.STORAGE, StructureDefinition.MaterialType.IRON,
+		Vector2i(2, 2), 250.0, 2.0, false, false,
+		[{ "id": &"iron_ingot", "count": 5 }, { "id": &"clay", "count": 4 }], &"")
 
 static func _add_struct(id: StringName, name: String, desc: String, stype: StructureDefinition.StructureType, mat: StructureDefinition.MaterialType, size: Vector2i, hp: float, arm: float, passable: bool, rot: bool, costs: Array[Dictionary], up_id: StringName) -> StructureDefinition:
 	var s: StructureDefinition = StructureDefinition.new()

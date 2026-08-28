@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://x8b9p1q2c3v4m"]
+[gd_scene load_steps=36 format=3 uid="uid://x8b9p1q2c3v4m"]
 
 [ext_resource type="Script" path="res://scenes/main/main.gd" id="1_main"]
 [ext_resource type="PackedScene" uid="uid://m1n2b3c4v5x6z" path="res://scenes/world/basic_map.tscn" id="2_world"]
@@ -35,6 +35,8 @@
 [ext_resource type="Script" path="res://world/dungeon/dungeon_manager.gd" id="33_dung_mgr"]
 [ext_resource type="Script" path="res://power/grid/power_grid_manager.gd" id="34_pwr_mgr"]
 [ext_resource type="Script" path="res://weather/seasons/season_manager.gd" id="35_season_mgr"]
+[ext_resource type="Script" path="res://colony/jobs/job_manager.gd" id="36_job_mgr"]
+[ext_resource type="Script" path="res://factions/manager/faction_manager.gd" id="37_fact_mgr"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_main")
@@ -53,6 +55,12 @@ script = ExtResource("34_pwr_mgr")
 
 [node name="SeasonManager" type="Node" parent="."]
 script = ExtResource("35_season_mgr")
+
+[node name="JobManager" type="Node" parent="."]
+script = ExtResource("36_job_mgr")
+
+[node name="FactionManager" type="Node" parent="."]
+script = ExtResource("37_fact_mgr")
 
 [node name="ExperienceManager" type="Node" parent="."]
 script = ExtResource("28_exp_mgr")

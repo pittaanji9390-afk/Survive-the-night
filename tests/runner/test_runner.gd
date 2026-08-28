@@ -26,10 +26,17 @@ const TestFactoryAutomationScript = preload("res://tests/unit/test_factory_autom
 const TestCompanionTamingScript = preload("res://tests/unit/test_companion_taming.gd")
 const TestSeasonsAndWeatherScript = preload("res://tests/unit/test_seasons_and_weather.gd")
 const TestTitanWorldBossScript = preload("res://tests/unit/test_titan_world_boss.gd")
+const TestColonySimulationScript = preload("res://tests/unit/test_colony_simulation.gd")
+const TestMagicAndSpellsScript = preload("res://tests/unit/test_magic_and_spells.gd")
+const TestNavalSystemsScript = preload("res://tests/unit/test_naval_systems.gd")
+const TestFluidLogisticsScript = preload("res://tests/unit/test_fluid_logistics.gd")
+const TestFactionDiplomacyScript = preload("res://tests/unit/test_faction_diplomacy.gd")
+const TestBSPDungeonScript = preload("res://tests/unit/test_bsp_dungeon.gd")
+const TestVehiclesAndTrainsScript = preload("res://tests/unit/test_vehicles_and_trains.gd")
 
 func _ready() -> void:
 	print("========================================")
-	print("   SURVIVE THE NIGHT - MASTER QA SUITE")
+	print("   SURVIVE THE NIGHT - GRAND QA SUITE")
 	print("========================================")
 	
 	var total_tests: int = 0
@@ -61,7 +68,14 @@ func _ready() -> void:
 		TestFactoryAutomationScript.new(),
 		TestCompanionTamingScript.new(),
 		TestSeasonsAndWeatherScript.new(),
-		TestTitanWorldBossScript.new()
+		TestTitanWorldBossScript.new(),
+		TestColonySimulationScript.new(),
+		TestMagicAndSpellsScript.new(),
+		TestNavalSystemsScript.new(),
+		TestFluidLogisticsScript.new(),
+		TestFactionDiplomacyScript.new(),
+		TestBSPDungeonScript.new(),
+		TestVehiclesAndTrainsScript.new()
 	]
 	
 	for suite in suites:
@@ -80,4 +94,4 @@ func _ready() -> void:
 	print("========================================")
 	
 	if failed_tests > 0:
-		push_error("Master test suite finished with %d failures." % failed_tests)
+		push_error("Grand test suite finished with %d failures." % failed_tests)
