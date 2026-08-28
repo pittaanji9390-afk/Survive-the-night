@@ -15,13 +15,23 @@ func unregister_service(service_name: StringName) -> void:
 		GameLogger.info("ServiceLocator", "Unregistered service: %s" % service_name)
 
 func get_service(service_name: StringName) -> Object:
-	if _services.has(service_name):
-		return _services[service_name]
-	GameLogger.warn("ServiceLocator", "Requested service '%s' not found." % service_name)
-	return null
+	if not _services.has(service_name):
+		GameLogger.warn("ServiceLocator", "Requested service '%s' not found." % service_name)
+		return null
+	
+	if not is_instance_valid(_services[service_name]):
+		_services.erase(service_name)
+		GameLogger.warn("ServiceLocator", "Requested service '%s' was previously freed." % service_name)
+		return null
+	
+	return _services[service_name]
 
 func has_service(service_name: StringName) -> bool:
-	return _services.has(service_name)
+	if _services.has(service_name):
+		if is_instance_valid(_services[service_name]):
+			return true
+		_services.erase(service_name)
+	return false
 
 func clear_all() -> void:
 	_services.clear()

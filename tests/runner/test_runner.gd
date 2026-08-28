@@ -15,10 +15,14 @@ const TestWaveManagerScript = preload("res://tests/unit/test_wave_manager.gd")
 const TestWorldGenerationScript = preload("res://tests/unit/test_world_generation.gd")
 const TestFarmingSystemScript = preload("res://tests/unit/test_farming_system.gd")
 const TestNPCAndTradingScript = preload("res://tests/unit/test_npc_and_trading.gd")
+const TestProgressionAndSkillsScript = preload("res://tests/unit/test_progression_and_skills.gd")
+const TestBossEncounterScript = preload("res://tests/unit/test_boss_encounter.gd")
+const TestSaveLoadSystemScript = preload("res://tests/unit/test_save_load_system.gd")
+const TestQuestSystemScript = preload("res://tests/unit/test_quest_system.gd")
 
 func _ready() -> void:
 	print("========================================")
-	print("   SURVIVE THE NIGHT - TEST SUITE")
+	print("   SURVIVE THE NIGHT - MASTER QA SUITE")
 	print("========================================")
 	
 	var total_tests: int = 0
@@ -39,7 +43,11 @@ func _ready() -> void:
 		TestWaveManagerScript.new(),
 		TestWorldGenerationScript.new(),
 		TestFarmingSystemScript.new(),
-		TestNPCAndTradingScript.new()
+		TestNPCAndTradingScript.new(),
+		TestProgressionAndSkillsScript.new(),
+		TestBossEncounterScript.new(),
+		TestSaveLoadSystemScript.new(),
+		TestQuestSystemScript.new()
 	]
 	
 	for suite in suites:
@@ -58,4 +66,4 @@ func _ready() -> void:
 	print("========================================")
 	
 	if failed_tests > 0:
-		push_error("Test suite finished with %d failures." % failed_tests)
+		push_error("Master test suite finished with %d failures." % failed_tests)

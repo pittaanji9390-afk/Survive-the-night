@@ -90,6 +90,9 @@ func set_base_value(new_base: float) -> void:
 	var max_val: float = get_max_value()
 	set_current(minf(current_value, max_val))
 
+func modify_base(delta: float) -> void:
+	set_base_value(base_value + delta)
+
 func add_modifier(id: String, val: float, type: ModifierType) -> void:
 	remove_modifier(id)
 	_modifiers.append(StatModifier.new(id, val, type))
