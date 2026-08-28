@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://b7v8d2x9k1m3p"]
+[gd_scene load_steps=12 format=3 uid="uid://b7v8d2x9k1m3p"]
 
 [ext_resource type="Script" path="res://player/controller/player_controller.gd" id="1_controller"]
 [ext_resource type="Script" path="res://player/movement/movement_component.gd" id="2_movement"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://inventory/inventory_container.gd" id="6_inv"]
 [ext_resource type="Script" path="res://inventory/hotbar_manager.gd" id="7_hotbar"]
 [ext_resource type="Script" path="res://inventory/equipment_inventory.gd" id="8_equip"]
+[ext_resource type="Script" path="res://crafting/queue/crafting_queue.gd" id="9_craft_queue"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_player"]
 radius = 10.0
@@ -45,6 +46,9 @@ script = ExtResource("7_hotbar")
 
 [node name="EquipmentInventory" type="Node" parent="."]
 script = ExtResource("8_equip")
+
+[node name="CraftingQueue" type="Node" parent="."]
+script = ExtResource("9_craft_queue")
 
 [node name="InteractionArea" type="Area2D" parent="."]
 collision_layer = 0

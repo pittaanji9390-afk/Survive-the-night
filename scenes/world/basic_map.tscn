@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://m1n2b3c4v5x6z"]
+[gd_scene load_steps=20 format=3 uid="uid://m1n2b3c4v5x6z"]
 
 [ext_resource type="Script" path="res://world/terrain/test_arena.gd" id="1_arena"]
 [ext_resource type="Texture2D" path="res://assets/tiles/grass_tile.png" id="2_grass"]
@@ -10,6 +10,9 @@
 [ext_resource type="Script" path="res://world/resources/rock_node.gd" id="8_rock_script"]
 [ext_resource type="Script" path="res://world/resources/bush_node.gd" id="9_bush_script"]
 [ext_resource type="Script" path="res://world/resources/test_interactable.gd" id="10_interactable"]
+[ext_resource type="Texture2D" path="res://assets/sprites/workbench.png" id="11_workbench_tex"]
+[ext_resource type="Texture2D" path="res://assets/sprites/campfire.png" id="12_campfire_tex"]
+[ext_resource type="Script" path="res://crafting/stations/crafting_station.gd" id="13_station_script"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hwall"]
 size = Vector2(1600, 32)
@@ -28,6 +31,9 @@ radius = 12.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_monolith"]
 size = Vector2(24, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_station"]
+size = Vector2(28, 24)
 
 [node name="TestArena" type="Node2D"]
 script = ExtResource("1_arena")
@@ -188,6 +194,36 @@ texture = ExtResource("6_monolith")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ResourceNodes/AncientMonolith"]
 position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_monolith")
+
+[node name="CraftingStations" type="Node2D" parent="."]
+
+[node name="Workbench" type="StaticBody2D" parent="CraftingStations" groups=["crafting_station", "interactable"]]
+position = Vector2(-60, 60)
+collision_layer = 6
+collision_mask = 0
+script = ExtResource("13_station_script")
+station_name = "Crafting Workbench"
+station_type = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="CraftingStations/Workbench"]
+texture = ExtResource("11_workbench_tex")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CraftingStations/Workbench"]
+shape = SubResource("RectangleShape2D_station")
+
+[node name="Campfire" type="StaticBody2D" parent="CraftingStations" groups=["crafting_station", "interactable"]]
+position = Vector2(60, 60)
+collision_layer = 6
+collision_mask = 0
+script = ExtResource("13_station_script")
+station_name = "Cooking Campfire"
+station_type = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="CraftingStations/Campfire"]
+texture = ExtResource("12_campfire_tex")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CraftingStations/Campfire"]
+shape = SubResource("RectangleShape2D_station")
 
 [node name="PlayerSpawnPoint" type="Marker2D" parent="."]
 position = Vector2(0, 0)

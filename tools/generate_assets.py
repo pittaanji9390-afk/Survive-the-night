@@ -35,13 +35,13 @@ def generate_all():
             return (20, 24, 30, 255)
         if y < 14: # Head
             if 8 <= y <= 10 and (x in (12, 13, 18, 19)):
-                return (20, 24, 30, 255) # Eyes
-            return (230, 190, 150, 255) # Skin
+                return (20, 24, 30, 255)
+            return (230, 190, 150, 255)
         elif y >= 14 and y <= 24:
             if 13 <= x <= 18:
-                return (40, 140, 110, 255) # Jacket
+                return (40, 140, 110, 255)
             return (30, 115, 90, 255)
-        else: # Boots
+        else:
             return (70, 50, 40, 255)
 
     with open('assets/sprites/player.png', 'wb') as f:
@@ -120,8 +120,6 @@ def generate_all():
         if dist >= 11:
             return (45, 50, 60, 255)
         shade = 115 + int((x * 13 + y * 17) % 25)
-        if x < 14 and y < 14:
-            shade += 20 # highlight
         return (shade, shade + 5, shade + 10, 255)
 
     with open('assets/sprites/rock.png', 'wb') as f:
@@ -133,7 +131,6 @@ def generate_all():
         dist = ((x - cx)**2 + (y - cy)**2)**0.5
         if dist > 13:
             return (0, 0, 0, 0)
-        # Red berries sprinkled
         if (x, y) in [(10, 12), (11, 12), (20, 14), (21, 14), (15, 20), (16, 20), (22, 10), (13, 22)]:
             return (220, 30, 45, 255)
         g = 130 + int((x * 19 + y * 23) % 35)
@@ -144,7 +141,39 @@ def generate_all():
     with open('assets/sprites/bush.png', 'wb') as f:
         f.write(make_png(32, 32, bush_pix))
 
-    print("Generated all updated assets successfully.")
+    # 9. Workbench (32x32)
+    def workbench_pix(x, y, w, h):
+        if 4 <= x <= 28 and 8 <= y <= 26:
+            if y <= 14:
+                return (140, 95, 55, 255) # Tabletop
+            if (4 <= x <= 8 or 24 <= x <= 28) and y >= 14:
+                return (100, 65, 35, 255) # Table legs
+            if 12 <= x <= 20 and 12 <= y <= 16:
+                return (180, 185, 195, 255) # Anvil tool on top
+            return (110, 75, 45, 255)
+        return (0, 0, 0, 0)
+
+    with open('assets/sprites/workbench.png', 'wb') as f:
+        f.write(make_png(32, 32, workbench_pix))
+
+    # 10. Campfire (32x32)
+    def campfire_pix(x, y, w, h):
+        cx, cy = w / 2.0, h / 2.0
+        dist = ((x - cx)**2 + (y - cy)**2)**0.5
+        if dist > 12:
+            return (0, 0, 0, 0)
+        if dist >= 10:
+            return (70, 75, 80, 255) # Stone ring
+        if 12 <= x <= 20 and 10 <= y <= 22:
+            return (255, 140, 20, 255) # Flame
+        if 14 <= x <= 18 and 12 <= y <= 18:
+            return (255, 240, 60, 255) # Bright core
+        return (80, 50, 30, 255) # Wood ash
+
+    with open('assets/sprites/campfire.png', 'wb') as f:
+        f.write(make_png(32, 32, campfire_pix))
+
+    print("Generated all updated assets including Workbench and Campfire.")
 
 if __name__ == '__main__':
     generate_all()

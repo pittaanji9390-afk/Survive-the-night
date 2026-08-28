@@ -6,6 +6,8 @@ const TestTimeManagerScript = preload("res://tests/unit/test_time_manager.gd")
 const TestGameStateScript = preload("res://tests/unit/test_game_state.gd")
 const TestInventoryScript = preload("res://tests/unit/test_inventory.gd")
 const TestResourceGatheringScript = preload("res://tests/unit/test_resource_gathering.gd")
+const TestCraftingRecipesScript = preload("res://tests/unit/test_crafting_recipes.gd")
+const TestTechTreeScript = preload("res://tests/unit/test_tech_tree.gd")
 
 func _ready() -> void:
 	print("========================================")
@@ -21,7 +23,9 @@ func _ready() -> void:
 		TestTimeManagerScript.new(),
 		TestGameStateScript.new(),
 		TestInventoryScript.new(),
-		TestResourceGatheringScript.new()
+		TestResourceGatheringScript.new(),
+		TestCraftingRecipesScript.new(),
+		TestTechTreeScript.new()
 	]
 	
 	for suite in suites:

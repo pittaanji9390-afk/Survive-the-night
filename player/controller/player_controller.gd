@@ -9,6 +9,7 @@ signal interaction_target_changed(target: Node)
 @onready var inventory: InventoryContainer = $InventoryContainer
 @onready var hotbar: HotbarManager = $HotbarManager
 @onready var equipment: EquipmentInventory = $EquipmentInventory
+@onready var crafting_queue: CraftingQueue = $CraftingQueue
 @onready var interaction_area: Area2D = $InteractionArea
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var interaction_label: Label = $InteractionPrompt
@@ -16,6 +17,7 @@ signal interaction_target_changed(target: Node)
 var current_interactable: Node = null
 var _nearby_interactables: Array[Node] = []
 var _attack_cooldown: float = 0.0
+var _use_item_cooldown: float = 0.0
 
 func _ready() -> void:
 	ServiceLocator.register_service(&"Player", self)
@@ -39,6 +41,8 @@ func _exit_tree() -> void:
 func _physics_process(delta: float) -> void:
 	if _attack_cooldown > 0.0:
 		_attack_cooldown -= delta
+	if _use_item_cooldown > 0.0:
+		_use_item_cooldown -= delta
 	
 	if not GameStateManager.is_gameplay_active():
 		velocity = Vector2.ZERO
@@ -52,11 +56,13 @@ func _physics_process(delta: float) -> void:
 
 func _grant_starter_items() -> void:
 	if inventory:
-		# Starter gear for testing gathering immediately
+		# Starter gear and resources to craft immediately
 		inventory.add_item(&"stone_axe", 1)
 		inventory.add_item(&"stone_pickaxe", 1)
-		inventory.add_item(&"berries", 10)
-		inventory.add_item(&"wood", 5)
+		inventory.add_item(&"berries", 15)
+		inventory.add_item(&"wood", 12)
+		inventory.add_item(&"stone", 10)
+		inventory.add_item(&"fiber", 8)
 
 func _handle_input_and_movement(delta: float) -> void:
 	if not state_machine.can_move():
@@ -70,7 +76,6 @@ func _handle_input_and_movement(delta: float) -> void:
 	
 	stats.update_stats(delta, is_moving, sprint_requested)
 	
-	# Determine state
 	if not is_moving:
 		state_machine.transition_to(PlayerStateMachine.PlayerState.IDLE)
 	elif stats.is_sprinting:
@@ -87,8 +92,13 @@ func _handle_input_and_movement(delta: float) -> void:
 	move_and_slide()
 
 func _handle_actions() -> void:
+	# Primary Left-Click: Attack / Gather
 	if InputManager.is_attacking() and _attack_cooldown <= 0.0:
 		_perform_gather_or_attack()
+	
+	# Secondary Right-Click: Use Consumable / Eat / Drink
+	if InputManager.is_using_item() and _use_item_cooldown <= 0.0:
+		_perform_use_item()
 
 func _perform_gather_or_attack() -> void:
 	var active_item: ItemDefinition = hotbar.get_active_item() if hotbar else null
@@ -103,22 +113,49 @@ func _perform_gather_or_attack() -> void:
 		GameLogger.info("Player", "Too exhausted to swing!")
 		return
 	
-	# Deduct stamina for swinging
 	stats.stamina.modify_current(-stam_cost)
 	stats.stamina_regen_timer = 1.0
 	_attack_cooldown = 1.0 / maxf(0.5, attack_speed)
 	
-	# Swing effect & weapon animation feedback
 	_animate_swing()
 	
-	# Check for resource node or interactable target in front of player
 	var target_node: ResourceNode = _find_target_resource_node()
 	if target_node:
 		var dealt: float = target_node.hit(damage, t_type, t_tier, self)
 		GameLogger.info("Player", "Hit %s for %.1f damage." % [target_node.node_name, dealt])
 	else:
-		# Air swing screen trauma
 		EventBus.screen_shake_requested.emit(0.05)
+
+func _perform_use_item() -> void:
+	var active_slot: InventorySlot = hotbar.get_active_slot() if hotbar else null
+	if not active_slot or active_slot.is_empty():
+		return
+	
+	var def: ItemDefinition = active_slot.get_item_definition()
+	if not def or not def.is_consumable():
+		return
+	
+	_use_item_cooldown = 0.5
+	
+	if def.health_restore != 0.0:
+		stats.heal(def.health_restore)
+	if def.hunger_restore != 0.0:
+		stats.feed(def.hunger_restore)
+	if def.stamina_restore != 0.0:
+		stats.stamina.modify_current(def.stamina_restore)
+	
+	var item_name: String = def.name
+	inventory.remove_item(def.id, 1)
+	
+	var msg: String = "Consumed %s (+%.0f HP, +%.0f Hunger)" % [item_name, def.health_restore, def.hunger_restore]
+	EventBus.notification_posted.emit("Consumable Used", msg, "heal")
+	GameLogger.info("Player", msg)
+	
+	# Small green flash on player sprite
+	if sprite:
+		var tween: Tween = create_tween()
+		sprite.modulate = Color(0.4, 1.5, 0.4, 1.0)
+		tween.tween_property(sprite, "modulate", Color.WHITE, 0.25)
 
 func _animate_swing() -> void:
 	if not sprite:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://x8b9p1q2c3v4m"]
+[gd_scene load_steps=13 format=3 uid="uid://x8b9p1q2c3v4m"]
 
 [ext_resource type="Script" path="res://scenes/main/main.gd" id="1_main"]
 [ext_resource type="PackedScene" uid="uid://m1n2b3c4v5x6z" path="res://scenes/world/basic_map.tscn" id="2_world"]
@@ -7,11 +7,17 @@
 [ext_resource type="PackedScene" uid="uid://c3m7x8n1p2q4v" path="res://scenes/ui/hud.tscn" id="5_hud"]
 [ext_resource type="PackedScene" uid="uid://fk8m2n3p4q5v6" path="res://scenes/ui/hotbar_ui.tscn" id="6_hotbar_ui"]
 [ext_resource type="PackedScene" uid="uid://dm4r5q6w7x8y9" path="res://scenes/ui/inventory_ui.tscn" id="7_inv_ui"]
-[ext_resource type="PackedScene" uid="uid://dp5r8k1t9v4w2" path="res://scenes/ui/pause_menu.tscn" id="8_pause"]
-[ext_resource type="PackedScene" uid="uid://e4x7q2m8b9n1w" path="res://scenes/ui/debug_overlay.tscn" id="9_debug"]
+[ext_resource type="PackedScene" uid="uid://cm3n4k5l6p7q8" path="res://scenes/ui/crafting_ui.tscn" id="8_craft_ui"]
+[ext_resource type="PackedScene" uid="uid://bv5n6m7k8l9q0" path="res://scenes/ui/tech_tree_ui.tscn" id="9_tech_ui"]
+[ext_resource type="PackedScene" uid="uid://dp5r8k1t9v4w2" path="res://scenes/ui/pause_menu.tscn" id="10_pause"]
+[ext_resource type="PackedScene" uid="uid://e4x7q2m8b9n1w" path="res://scenes/ui/debug_overlay.tscn" id="11_debug"]
+[ext_resource type="Script" path="res://progression/technology/tech_tree_manager.gd" id="12_tech_mgr"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_main")
+
+[node name="TechTreeManager" type="Node" parent="."]
+script = ExtResource("12_tech_mgr")
 
 [node name="World" parent="." instance=ExtResource("2_world")]
 
@@ -32,6 +38,10 @@ target_node = NodePath("../Player")
 
 [node name="InventoryUI" parent="CanvasLayer" instance=ExtResource("7_inv_ui")]
 
-[node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("8_pause")]
+[node name="CraftingUI" parent="CanvasLayer" instance=ExtResource("8_craft_ui")]
 
-[node name="DebugOverlay" parent="." instance=ExtResource("9_debug")]
+[node name="TechTreeUI" parent="CanvasLayer" instance=ExtResource("9_tech_ui")]
+
+[node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("10_pause")]
+
+[node name="DebugOverlay" parent="." instance=ExtResource("11_debug")]

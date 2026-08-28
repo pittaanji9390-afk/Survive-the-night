@@ -11,24 +11,25 @@ def verify_scripts():
         with open(path, 'r', encoding='utf-8') as f:
             content = f.read()
         
-        # Check basic syntax rules
         lines = content.splitlines()
         for idx, line in enumerate(lines, 1):
             stripped = line.strip()
             if not stripped or stripped.startswith('#'):
                 continue
             
-            # Check for illegal python syntax accidentally placed in GDScript (like def, None, True/False vs true/false)
-            if re.match(r'^\s*def\s+', line):
+            # Strip string literals before keyword checks
+            clean_line = re.sub(r'".*?"|\'.*?\'', '', line)
+            
+            if re.match(r'^\s*def\s+', clean_line):
                 print(f"Error in {path}:{idx}: Python 'def' used instead of GDScript 'func'")
                 errors += 1
-            if re.search(r'\bNone\b', line):
+            if re.search(r'\bNone\b', clean_line):
                 print(f"Error in {path}:{idx}: Python 'None' used instead of GDScript 'null'")
                 errors += 1
-            if re.search(r'\bTrue\b', line) and not re.search(r'#.*True', line):
+            if re.search(r'\bTrue\b', clean_line):
                 print(f"Error in {path}:{idx}: Python 'True' used instead of GDScript 'true'")
                 errors += 1
-            if re.search(r'\bFalse\b', line) and not re.search(r'#.*False', line):
+            if re.search(r'\bFalse\b', clean_line):
                 print(f"Error in {path}:{idx}: Python 'False' used instead of GDScript 'false'")
                 errors += 1
 
