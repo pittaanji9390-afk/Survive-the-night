@@ -8,8 +8,8 @@ config_version=5
 
 config/name="Survive the Night"
 config/description="A modular 2D top-down survival and base-building game."
-config/version="0.1.0"
-run/main_scene="res://scenes/main/main.tscn"
+config/version="1.0.0"
+run/main_scene="res://scenes/ui/main_menu.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 

@@ -35,10 +35,11 @@ const TestBSPDungeonScript = preload("res://tests/unit/test_bsp_dungeon.gd")
 const TestVehiclesAndTrainsScript = preload("res://tests/unit/test_vehicles_and_trains.gd")
 const TestArcadeGamesScript = preload("res://tests/unit/test_arcade_games.gd")
 const TestMoreArcadeGamesScript = preload("res://tests/unit/test_more_arcade_games.gd")
+const TestAchievementsScript = preload("res://tests/unit/test_achievements.gd")
 
 func _ready() -> void:
 	print("========================================")
-	print("   SURVIVE THE NIGHT - GRAND QA SUITE")
+	print("   SURVIVE THE NIGHT - PRODUCTION QA")
 	print("========================================")
 	
 	var total_tests: int = 0
@@ -79,7 +80,8 @@ func _ready() -> void:
 		TestBSPDungeonScript.new(),
 		TestVehiclesAndTrainsScript.new(),
 		TestArcadeGamesScript.new(),
-		TestMoreArcadeGamesScript.new()
+		TestMoreArcadeGamesScript.new(),
+		TestAchievementsScript.new()
 	]
 	
 	for suite in suites:
@@ -98,4 +100,4 @@ func _ready() -> void:
 	print("========================================")
 	
 	if failed_tests > 0:
-		push_error("Grand test suite finished with %d failures." % failed_tests)
+		push_error("Production test suite finished with %d failures." % failed_tests)
