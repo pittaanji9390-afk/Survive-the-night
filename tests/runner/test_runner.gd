@@ -36,6 +36,7 @@ const TestVehiclesAndTrainsScript = preload("res://tests/unit/test_vehicles_and_
 const TestArcadeGamesScript = preload("res://tests/unit/test_arcade_games.gd")
 const TestMoreArcadeGamesScript = preload("res://tests/unit/test_more_arcade_games.gd")
 const TestAchievementsScript = preload("res://tests/unit/test_achievements.gd")
+const TestAdvancedExpansionsScript = preload("res://tests/unit/test_advanced_expansions.gd")
 
 func _ready() -> void:
 	print("========================================")
@@ -81,7 +82,8 @@ func _ready() -> void:
 		TestVehiclesAndTrainsScript.new(),
 		TestArcadeGamesScript.new(),
 		TestMoreArcadeGamesScript.new(),
-		TestAchievementsScript.new()
+		TestAchievementsScript.new(),
+		TestAdvancedExpansionsScript.new()
 	]
 	
 	for suite in suites:

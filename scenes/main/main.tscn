@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://x8b9p1q2c3v4m"]
+[gd_scene load_steps=41 format=3 uid="uid://x8b9p1q2c3v4m"]
 
 [ext_resource type="Script" path="res://scenes/main/main.gd" id="1_main"]
 [ext_resource type="PackedScene" uid="uid://m1n2b3c4v5x6z" path="res://scenes/world/basic_map.tscn" id="2_world"]
@@ -39,6 +39,9 @@
 [ext_resource type="Script" path="res://factions/manager/faction_manager.gd" id="37_fact_mgr"]
 [ext_resource type="Script" path="res://minigames/hub/arcade_manager.gd" id="38_arcade_mgr"]
 [ext_resource type="Script" path="res://achievements/achievement_manager.gd" id="39_achieve_mgr"]
+[ext_resource type="Script" path="res://net/network_manager.gd" id="40_net_mgr"]
+[ext_resource type="Script" path="res://space/rocket_manager.gd" id="41_rocket_mgr"]
+[ext_resource type="Script" path="res://editor/map_editor_manager.gd" id="42_map_editor"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_main")
@@ -51,6 +54,15 @@ script = ExtResource("32_snd_mgr")
 
 [node name="SaveManager" type="Node" parent="."]
 script = ExtResource("30_save_mgr")
+
+[node name="NetworkManager" type="Node" parent="."]
+script = ExtResource("40_net_mgr")
+
+[node name="RocketManager" type="Node" parent="."]
+script = ExtResource("41_rocket_mgr")
+
+[node name="MapEditorManager" type="Node" parent="."]
+script = ExtResource("42_map_editor")
 
 [node name="AchievementManager" type="Node" parent="."]
 script = ExtResource("39_achieve_mgr")
