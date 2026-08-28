@@ -1,0 +1,133 @@
+[gd_scene load_steps=5 format=3 uid="uid://dm4r5q6w7x8y9"]
+
+[ext_resource type="Script" path="res://ui/inventory/inventory_ui.gd" id="1_inv_ui"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_inv_panel"]
+bg_color = Color(0.08, 0.1, 0.14, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.22, 0.28, 0.38, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_weight_bg"]
+bg_color = Color(0.15, 0.18, 0.22, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_weight_fill"]
+bg_color = Color(0.3, 0.7, 0.9, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[node name="InventoryUI" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_inv_ui")
+
+[node name="Backdrop" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.35)
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -190.0
+offset_top = -180.0
+offset_right = 190.0
+offset_bottom = 180.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_inv_panel")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 14
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="HeaderHBox" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/HeaderHBox"]
+layout_mode = 2
+size_flags_horizontal = 2
+theme_override_font_sizes/font_size = 16
+text = "INVENTORY (24 SLOTS)"
+
+[node name="WeightLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/HeaderHBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.85, 0.95, 1)
+theme_override_font_sizes/font_size = 11
+text = "Weight: 0.0 / 60.0 kg"
+
+[node name="CloseBtn" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HeaderHBox"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+text = "X"
+
+[node name="WeightBar" type="ProgressBar" parent="PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 6)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_weight_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_weight_fill")
+value = 25.0
+show_percentage = false
+
+[node name="GridContainer" type="GridContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 6
+theme_override_constants/v_separation = 6
+columns = 6
+
+[node name="ButtonHBox" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="SortCategoryBtn" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/ButtonHBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "Sort: Type"
+
+[node name="SortNameBtn" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/ButtonHBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "Sort: Name"
+
+[node name="SortRarityBtn" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/ButtonHBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "Sort: Rarity"
+
+[node name="DropBtn" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/ButtonHBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "Drop Selected"

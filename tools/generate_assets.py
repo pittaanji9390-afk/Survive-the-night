@@ -110,12 +110,41 @@ def generate_all():
     with open('assets/sprites/monolith.png', 'wb') as f:
         f.write(make_png(32, 48, monolith_pix))
 
-    # 7. Icon SVG
-    svg_content = '<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128"><rect width="128" height="128" fill="#1c2028" rx="16"/><circle cx="64" cy="64" r="40" fill="#228866"/><text x="64" y="72" font-size="24" font-family="sans-serif" font-weight="bold" fill="#ffffff" text-anchor="middle">STN</text></svg>'
-    with open('icon.svg', 'w') as f:
-        f.write(svg_content)
+    # 7. Rock (32x32)
+    def rock_pix(x, y, w, h):
+        cx, cy = w / 2.0, h / 2.0
+        dx, dy = (x - cx) * 1.0, (y - cy) * 1.3
+        dist = (dx*dx + dy*dy)**0.5
+        if dist > 12:
+            return (0, 0, 0, 0)
+        if dist >= 11:
+            return (45, 50, 60, 255)
+        shade = 115 + int((x * 13 + y * 17) % 25)
+        if x < 14 and y < 14:
+            shade += 20 # highlight
+        return (shade, shade + 5, shade + 10, 255)
 
-    print("Generated all placeholder textures successfully.")
+    with open('assets/sprites/rock.png', 'wb') as f:
+        f.write(make_png(32, 32, rock_pix))
+
+    # 8. Bush (32x32)
+    def bush_pix(x, y, w, h):
+        cx, cy = w / 2.0, h / 2.0
+        dist = ((x - cx)**2 + (y - cy)**2)**0.5
+        if dist > 13:
+            return (0, 0, 0, 0)
+        # Red berries sprinkled
+        if (x, y) in [(10, 12), (11, 12), (20, 14), (21, 14), (15, 20), (16, 20), (22, 10), (13, 22)]:
+            return (220, 30, 45, 255)
+        g = 130 + int((x * 19 + y * 23) % 35)
+        r = 35 + int((x * 5) % 15)
+        b = 30 + int((y * 7) % 15)
+        return (r, g, b, 255)
+
+    with open('assets/sprites/bush.png', 'wb') as f:
+        f.write(make_png(32, 32, bush_pix))
+
+    print("Generated all updated assets successfully.")
 
 if __name__ == '__main__':
     generate_all()

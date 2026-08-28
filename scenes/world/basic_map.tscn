@@ -1,11 +1,15 @@
-[gd_scene load_steps=10 format=3 uid="uid://m1n2b3c4v5x6z"]
+[gd_scene load_steps=16 format=3 uid="uid://m1n2b3c4v5x6z"]
 
 [ext_resource type="Script" path="res://world/terrain/test_arena.gd" id="1_arena"]
 [ext_resource type="Texture2D" path="res://assets/tiles/grass_tile.png" id="2_grass"]
-[ext_resource type="Texture2D" path="res://assets/tiles/stone_wall.png" id="3_stone"]
-[ext_resource type="Texture2D" path="res://assets/sprites/tree.png" id="4_tree"]
-[ext_resource type="Texture2D" path="res://assets/sprites/monolith.png" id="5_monolith"]
-[ext_resource type="Script" path="res://world/resources/test_interactable.gd" id="6_interactable"]
+[ext_resource type="Texture2D" path="res://assets/sprites/tree.png" id="3_tree"]
+[ext_resource type="Texture2D" path="res://assets/sprites/rock.png" id="4_rock"]
+[ext_resource type="Texture2D" path="res://assets/sprites/bush.png" id="5_bush"]
+[ext_resource type="Texture2D" path="res://assets/sprites/monolith.png" id="6_monolith"]
+[ext_resource type="Script" path="res://world/resources/tree_node.gd" id="7_tree_script"]
+[ext_resource type="Script" path="res://world/resources/rock_node.gd" id="8_rock_script"]
+[ext_resource type="Script" path="res://world/resources/bush_node.gd" id="9_bush_script"]
+[ext_resource type="Script" path="res://world/resources/test_interactable.gd" id="10_interactable"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hwall"]
 size = Vector2(1600, 32)
@@ -15,6 +19,12 @@ size = Vector2(32, 1200)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tree"]
 radius = 16.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rock"]
+radius = 14.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bush"]
+radius = 12.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_monolith"]
 size = Vector2(24, 32)
@@ -74,57 +84,108 @@ collision_mask = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/WallRight"]
 shape = SubResource("RectangleShape2D_vwall")
 
-[node name="Props" type="Node2D" parent="."]
+[node name="ResourceNodes" type="Node2D" parent="."]
 
-[node name="Tree1" type="StaticBody2D" parent="Props"]
-position = Vector2(-150, -100)
-collision_layer = 2
+[node name="Tree1" type="StaticBody2D" parent="ResourceNodes" groups=["interactable", "resource_node"]]
+position = Vector2(-160, -90)
+collision_layer = 6
 collision_mask = 0
+script = ExtResource("7_tree_script")
 
-[node name="Sprite2D" type="Sprite2D" parent="Props/Tree1"]
+[node name="Sprite2D" type="Sprite2D" parent="ResourceNodes/Tree1"]
 position = Vector2(0, -16)
-texture = ExtResource("4_tree")
+texture = ExtResource("3_tree")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Props/Tree1"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ResourceNodes/Tree1"]
 position = Vector2(0, 8)
 shape = SubResource("CircleShape2D_tree")
 
-[node name="Tree2" type="StaticBody2D" parent="Props"]
-position = Vector2(200, -120)
-collision_layer = 2
+[node name="Tree2" type="StaticBody2D" parent="ResourceNodes" groups=["interactable", "resource_node"]]
+position = Vector2(180, -120)
+collision_layer = 6
 collision_mask = 0
+script = ExtResource("7_tree_script")
 
-[node name="Sprite2D" type="Sprite2D" parent="Props/Tree2"]
+[node name="Sprite2D" type="Sprite2D" parent="ResourceNodes/Tree2"]
 position = Vector2(0, -16)
-texture = ExtResource("4_tree")
+texture = ExtResource("3_tree")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Props/Tree2"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ResourceNodes/Tree2"]
 position = Vector2(0, 8)
 shape = SubResource("CircleShape2D_tree")
 
-[node name="Tree3" type="StaticBody2D" parent="Props"]
-position = Vector2(-220, 150)
-collision_layer = 2
+[node name="Tree3" type="StaticBody2D" parent="ResourceNodes" groups=["interactable", "resource_node"]]
+position = Vector2(-220, 140)
+collision_layer = 6
 collision_mask = 0
+script = ExtResource("7_tree_script")
 
-[node name="Sprite2D" type="Sprite2D" parent="Props/Tree3"]
+[node name="Sprite2D" type="Sprite2D" parent="ResourceNodes/Tree3"]
 position = Vector2(0, -16)
-texture = ExtResource("4_tree")
+texture = ExtResource("3_tree")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Props/Tree3"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ResourceNodes/Tree3"]
 position = Vector2(0, 8)
 shape = SubResource("CircleShape2D_tree")
 
-[node name="AncientMonolith" type="StaticBody2D" parent="Props" groups=["interactable"]]
+[node name="Rock1" type="StaticBody2D" parent="ResourceNodes" groups=["interactable", "resource_node"]]
+position = Vector2(150, 120)
+collision_layer = 6
+collision_mask = 0
+script = ExtResource("8_rock_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="ResourceNodes/Rock1"]
+texture = ExtResource("4_rock")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ResourceNodes/Rock1"]
+shape = SubResource("CircleShape2D_rock")
+
+[node name="Rock2" type="StaticBody2D" parent="ResourceNodes" groups=["interactable", "resource_node"]]
+position = Vector2(-120, 180)
+collision_layer = 6
+collision_mask = 0
+script = ExtResource("8_rock_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="ResourceNodes/Rock2"]
+texture = ExtResource("4_rock")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ResourceNodes/Rock2"]
+shape = SubResource("CircleShape2D_rock")
+
+[node name="Bush1" type="StaticBody2D" parent="ResourceNodes" groups=["interactable", "resource_node"]]
+position = Vector2(60, -70)
+collision_layer = 6
+collision_mask = 0
+script = ExtResource("9_bush_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="ResourceNodes/Bush1"]
+texture = ExtResource("5_bush")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ResourceNodes/Bush1"]
+shape = SubResource("CircleShape2D_bush")
+
+[node name="Bush2" type="StaticBody2D" parent="ResourceNodes" groups=["interactable", "resource_node"]]
+position = Vector2(-70, -60)
+collision_layer = 6
+collision_mask = 0
+script = ExtResource("9_bush_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="ResourceNodes/Bush2"]
+texture = ExtResource("5_bush")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ResourceNodes/Bush2"]
+shape = SubResource("CircleShape2D_bush")
+
+[node name="AncientMonolith" type="StaticBody2D" parent="ResourceNodes" groups=["interactable"]]
 position = Vector2(0, -180)
 collision_layer = 6
 collision_mask = 0
-script = ExtResource("6_interactable")
+script = ExtResource("10_interactable")
 
-[node name="Sprite2D" type="Sprite2D" parent="Props/AncientMonolith"]
-texture = ExtResource("5_monolith")
+[node name="Sprite2D" type="Sprite2D" parent="ResourceNodes/AncientMonolith"]
+texture = ExtResource("6_monolith")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Props/AncientMonolith"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ResourceNodes/AncientMonolith"]
 position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_monolith")
 

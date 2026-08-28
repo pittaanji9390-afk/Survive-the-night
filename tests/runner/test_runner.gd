@@ -4,6 +4,8 @@ extends Node
 const TestStatAttributeScript = preload("res://tests/unit/test_stat_attribute.gd")
 const TestTimeManagerScript = preload("res://tests/unit/test_time_manager.gd")
 const TestGameStateScript = preload("res://tests/unit/test_game_state.gd")
+const TestInventoryScript = preload("res://tests/unit/test_inventory.gd")
+const TestResourceGatheringScript = preload("res://tests/unit/test_resource_gathering.gd")
 
 func _ready() -> void:
 	print("========================================")
@@ -17,7 +19,9 @@ func _ready() -> void:
 	var suites: Array = [
 		TestStatAttributeScript.new(),
 		TestTimeManagerScript.new(),
-		TestGameStateScript.new()
+		TestGameStateScript.new(),
+		TestInventoryScript.new(),
+		TestResourceGatheringScript.new()
 	]
 	
 	for suite in suites:
