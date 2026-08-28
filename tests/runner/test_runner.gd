@@ -12,6 +12,9 @@ const TestBuildingSystemScript = preload("res://tests/unit/test_building_system.
 const TestCombatSystemScript = preload("res://tests/unit/test_combat_system.gd")
 const TestSurvivalMechanicsScript = preload("res://tests/unit/test_survival_mechanics.gd")
 const TestWaveManagerScript = preload("res://tests/unit/test_wave_manager.gd")
+const TestWorldGenerationScript = preload("res://tests/unit/test_world_generation.gd")
+const TestFarmingSystemScript = preload("res://tests/unit/test_farming_system.gd")
+const TestNPCAndTradingScript = preload("res://tests/unit/test_npc_and_trading.gd")
 
 func _ready() -> void:
 	print("========================================")
@@ -33,7 +36,10 @@ func _ready() -> void:
 		TestBuildingSystemScript.new(),
 		TestCombatSystemScript.new(),
 		TestSurvivalMechanicsScript.new(),
-		TestWaveManagerScript.new()
+		TestWaveManagerScript.new(),
+		TestWorldGenerationScript.new(),
+		TestFarmingSystemScript.new(),
+		TestNPCAndTradingScript.new()
 	]
 	
 	for suite in suites:

@@ -39,27 +39,33 @@ static func _ensure_initialized() -> void:
 	if _initialized:
 		return
 	_initialized = true
-	_populate_default_database()
+	_populate_default_items()
 
-static func _populate_default_database() -> void:
-	# 1. Basic Resources
-	_create_resource(&"wood", "Wood", "Sturdy timber chopped from trees. Essential for crafting and construction.", 99, 0.4, 2)
-	_create_resource(&"stick", "Stick", "Small wooden branches gathered from foliage or broken branches.", 99, 0.1, 1)
-	_create_resource(&"stone", "Stone", "Dense raw rock quarried from boulders. Used in primitive tools and stonework.", 99, 0.8, 2)
-	_create_resource(&"flint", "Flint", "Sharp mineral flake useful for making spark sources and bladed stone heads.", 99, 0.3, 3)
-	_create_resource(&"coal", "Coal", "Combustible carbon lump used as efficient furnace fuel and torch making.", 99, 0.5, 4)
-	_create_resource(&"iron_ore", "Iron Ore", "Raw unrefined iron mineral. Can be smelted into durable iron ingots.", 99, 1.2, 6)
-	_create_resource(&"gold_ore", "Gold Ore", "Precious golden ore. Prized for valuable craftsmanship and arcane trinkets.", 99, 1.5, 15)
-	_create_resource(&"fiber", "Plant Fiber", "Flexible dried natural plant threads used for making rope and cloth.", 99, 0.1, 1)
-	_create_resource(&"clay", "Clay", "Malleable earth mineral suitable for ceramics and masonry bricks.", 99, 0.6, 2)
-	_create_resource(&"copper_ore", "Copper Ore", "Malleable reddish metal ore found in shallow rocky crags.", 99, 1.0, 5)
+static func _populate_default_items() -> void:
+	# 1. Raw Harvested Resources
+	_create_resource(&"wood", "Wood Log", "Freshly chopped timber from trees. Essential for construction and tool handles.", 99, 0.4, 2)
+	_create_resource(&"stone", "Raw Stone", "Rough granite quarried from boulders. Used in stone tools and masonry.", 99, 0.8, 2)
+	_create_resource(&"iron_ore", "Iron Ore", "Dense unrefined iron-rich mineral vein chunk.", 99, 1.2, 5)
+	_create_resource(&"gold_ore", "Gold Ore", "Glittering precious mineral chunk, highly prized for advanced crafting.", 99, 1.5, 15)
+	_create_resource(&"flint", "Flint Stone", "Hard, sharp sedimentary mineral used for starting fires and fletching arrowheads.", 99, 0.4, 3)
+	_create_resource(&"coal", "Lump of Coal", "Combustible black mineral used for high-temperature smelting and torches.", 99, 0.5, 4)
+	_create_resource(&"fiber", "Plant Fiber", "Flexible fibrous plant strands used for weaving twine, cordage, and light apparel.", 99, 0.1, 1)
+	_create_resource(&"clay", "Wet Clay", "Malleable earth suitable for pottery, bricks, and furnace masonry.", 99, 0.6, 2)
+	_create_resource(&"stick", "Wooden Stick", "A slender piece of wood suitable for crafting tools, arrows, and kindling.", 99, 0.2, 1)
 
-	# 2. Food & Consumables
-	_create_food(&"berries", "Forest Berries", "Sweet wild berries gathered from forest bushes. Restores modest hunger.", 50, 0.1, 2, 0.0, 5.0, 15.0)
-	_create_food(&"apple", "Crisp Apple", "A juicy ripe red apple picked from wild trees. Restores health and hunger.", 50, 0.2, 4, 8.0, 10.0, 20.0)
+	# 2. Foraged Food & Crops
+	_create_food(&"berries", "Sweet Berries", "Handful of ripe wild forest berries. Restores hunger and a pinch of stamina.", 50, 0.1, 1, 2.0, 5.0, 8.0)
+	_create_food(&"apple", "Crisp Apple", "A juicy wild orchard apple, rich in natural sugars and moisture.", 30, 0.2, 3, 5.0, 10.0, 12.0)
 	_create_food(&"healing_herb", "Healing Herb", "Potent medicinal leaves that soothe wounds and rapidly regenerate health.", 30, 0.1, 8, 25.0, 0.0, 0.0)
 	_create_food(&"raw_meat", "Raw Meat", "Uncooked animal meat. Edible in emergencies, but risky when raw.", 30, 0.5, 3, -5.0, 0.0, 20.0)
 	_create_food(&"cooked_meat", "Roasted Steak", "Delicious seasoned roasted meat cooked over fire. Excellent nourishment.", 30, 0.5, 12, 15.0, 20.0, 50.0)
+	_create_food(&"wheat", "Harvested Wheat", "Golden sheaves of wheat ready to be ground into flour or traded.", 99, 0.2, 4, 0.0, 0.0, 5.0)
+	_create_food(&"spoiled_matter", "Spoiled Matter", "Decomposed organic rot. Inedible, but can be used as fertilizer.", 50, 0.3, 0, -15.0, -10.0, 0.0)
+
+	# Seeds
+	_create_resource(&"seed_wheat", "Wheat Seeds", "Viable grain kernels that can be planted in tilled farm soil.", 99, 0.05, 2)
+	_create_resource(&"seed_carrot", "Carrot Seeds", "Heirloom root vegetable seeds for farming.", 99, 0.05, 3)
+	_create_resource(&"seed_herb", "Herb Seeds", "Medicinal botanical seeds for cultivating healing herbs.", 99, 0.05, 5)
 
 	# 3. Gathering Tools
 	_create_tool(&"stone_axe", "Stone Axe", "A primitive handaxe bound with rope. Effective at felling trees.", ItemDefinition.ToolType.AXE, 2, 12.0, 1.1, 100, 15)
