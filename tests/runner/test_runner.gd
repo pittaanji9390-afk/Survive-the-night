@@ -21,6 +21,11 @@ const TestSaveLoadSystemScript = preload("res://tests/unit/test_save_load_system
 const TestQuestSystemScript = preload("res://tests/unit/test_quest_system.gd")
 const TestDungeonGenerationScript = preload("res://tests/unit/test_dungeon_generation.gd")
 const TestDungeonMechanicsScript = preload("res://tests/unit/test_dungeon_mechanics.gd")
+const TestPowerGridScript = preload("res://tests/unit/test_power_grid.gd")
+const TestFactoryAutomationScript = preload("res://tests/unit/test_factory_automation.gd")
+const TestCompanionTamingScript = preload("res://tests/unit/test_companion_taming.gd")
+const TestSeasonsAndWeatherScript = preload("res://tests/unit/test_seasons_and_weather.gd")
+const TestTitanWorldBossScript = preload("res://tests/unit/test_titan_world_boss.gd")
 
 func _ready() -> void:
 	print("========================================")
@@ -51,7 +56,12 @@ func _ready() -> void:
 		TestSaveLoadSystemScript.new(),
 		TestQuestSystemScript.new(),
 		TestDungeonGenerationScript.new(),
-		TestDungeonMechanicsScript.new()
+		TestDungeonMechanicsScript.new(),
+		TestPowerGridScript.new(),
+		TestFactoryAutomationScript.new(),
+		TestCompanionTamingScript.new(),
+		TestSeasonsAndWeatherScript.new(),
+		TestTitanWorldBossScript.new()
 	]
 	
 	for suite in suites:

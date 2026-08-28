@@ -113,7 +113,7 @@ static func _populate_default_structures() -> void:
 		[{ "id": &"wood", "count": 4 }, { "id": &"rope", "count": 2 }], &"")
 
 	# ==========================================
-	# 6. LIGHTING & UTILITY & FARMING
+	# 6. LIGHTING & UTILITY & FARMING & FACTORY
 	# ==========================================
 	_add_struct(&"standing_torch", "Standing Torch", "Mounted pitch torch providing persistent ambient perimeter illumination.",
 		StructureDefinition.StructureType.LIGHT, StructureDefinition.MaterialType.WOOD,
@@ -129,6 +129,21 @@ static func _populate_default_structures() -> void:
 		StructureDefinition.StructureType.FARM_PLOT, StructureDefinition.MaterialType.WOOD,
 		Vector2i(1, 1), 40.0, 0.0, true, false,
 		[{ "id": &"wood", "count": 2 }, { "id": &"clay", "count": 1 }], &"")
+
+	_add_struct(&"conveyor_belt", "Conveyor Belt", "Moving assembly line belt that transfers items along its grid axis.",
+		StructureDefinition.StructureType.FLOOR, StructureDefinition.MaterialType.IRON,
+		Vector2i(1, 1), 80.0, 1.0, true, true,
+		[{ "id": &"iron_ingot", "count": 2 }, { "id": &"rope", "count": 1 }], &"")
+
+	_add_struct(&"auto_smelter", "Automated Smelter", "Powered induction furnace that continuously smelts ores into ingots.",
+		StructureDefinition.StructureType.STORAGE, StructureDefinition.MaterialType.IRON,
+		Vector2i(2, 2), 300.0, 4.0, false, false,
+		[{ "id": &"iron_ingot", "count": 6 }, { "id": &"stone", "count": 10 }], &"")
+
+	_add_struct(&"electric_fence", "Electric Perimeter Fence", "High-voltage electrified wire fence that shocks and repels monsters.",
+		StructureDefinition.StructureType.WALL, StructureDefinition.MaterialType.IRON,
+		Vector2i(1, 1), 200.0, 3.0, false, false,
+		[{ "id": &"iron_ingot", "count": 3 }, { "id": &"gold_ingot", "count": 1 }], &"")
 
 static func _add_struct(id: StringName, name: String, desc: String, stype: StructureDefinition.StructureType, mat: StructureDefinition.MaterialType, size: Vector2i, hp: float, arm: float, passable: bool, rot: bool, costs: Array[Dictionary], up_id: StringName) -> StructureDefinition:
 	var s: StructureDefinition = StructureDefinition.new()
