@@ -14,6 +14,9 @@ signal weather_changed(weather_type: int)
 
 # --- Player Signals ---
 signal player_spawned(player: Node2D)
+signal player_damaged(amount: float, attacker: Node)
+signal player_healed(amount: float)
+signal player_fed(amount: float)
 signal player_died()
 signal player_respawned()
 signal player_stat_changed(stat_name: StringName, current_value: float, max_value: float)
