@@ -1,0 +1,24 @@
+{
+  "name": "survive-the-night",
+  "version": "1.0.0",
+  "description": "Survive the Night - Authoritative Simulation & Game Server",
+  "main": "main.py",
+  "scripts": {
+    "start": "python main.py --port 7777",
+    "build": "python tools/build_production_server.py && python tools/verify_scripts.py",
+    "test": "python tools/verify_scripts.py",
+    "docker:build": "docker build -t survive-the-night .",
+    "docker:run": "docker run -p 7777:7777 survive-the-night"
+  },
+  "keywords": [
+    "godot",
+    "game-server",
+    "simulation",
+    "survival",
+    "multiplayer"
+  ],
+  "author": "Development Team",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {}
+}
