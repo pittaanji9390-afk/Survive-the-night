@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "description": "Survive the Night - Authoritative Simulation & Game Server",
   "main": "main.py",
+  "private": true,
+  "license": "UNLICENSED",
   "scripts": {
     "start": "python main.py --port 7777",
     "build": "python tools/build_production_server.py && python tools/verify_scripts.py",
@@ -18,7 +20,6 @@
     "multiplayer"
   ],
   "author": "Development Team",
-  "license": "MIT",
   "dependencies": {},
   "devDependencies": {}
 }

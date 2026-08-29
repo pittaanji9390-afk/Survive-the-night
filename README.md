@@ -141,4 +141,4 @@ docker run -p 7777:7777 -p 8000:8000 survive-the-night:latest
 ---
 
 ## License
-MIT License. Created for production and commercial deployment.
+Proprietary software. All rights reserved. Not open source.

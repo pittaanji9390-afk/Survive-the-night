@@ -3,7 +3,7 @@ name = "survive-the-night"
 version = "1.0.0"
 description = "A modular 2D survival game and authoritative simulation server."
 authors = ["Development Team <dev@survivethenight.com>"]
-license = "MIT"
+license = "Proprietary"
 readme = "README.md"
 
 [tool.poetry.dependencies]
